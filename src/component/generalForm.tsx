@@ -14,8 +14,7 @@ import { useFormik } from 'formik';
 import React, { useMemo } from 'react';
 import * as Yup from 'yup';
 import { FormType } from '../models/generalForm';
-import { useQuery } from '@tanstack/react-query';
-import { getFormData } from '../services/FormService';
+import { useGeneralForm } from '../hooks/useGeneralForm';
 
 export type SwitchArrayType = {
   name: string;
@@ -25,7 +24,7 @@ export type SwitchArrayType = {
 };
 
 const GeneralForm = () => {
-  const { data, isLoading, isError } = useQuery(['form-data'], getFormData);
+  const { data, isLoading, isError } = useGeneralForm();
 
   const initialValues = useMemo<FormType>(() => {
     return {
