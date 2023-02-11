@@ -13,6 +13,8 @@ import { useFormik } from "formik";
 import React, { useMemo } from "react";
 import * as Yup from 'yup'
 import { FormType } from "../models/generalForm";
+import { useQuery } from "@tanstack/react-query";
+import { getFormData } from "../services/FormService";
 
 export type SwitchArrayType = {
   name: string,
@@ -23,28 +25,31 @@ export type SwitchArrayType = {
 
 const GeneralForm = () => {
 
+  const { data, isLoading, isError } = useQuery(['form-data'], getFormData)
+
   const initialValues = useMemo<FormType>(() => {
     return {
-      conversationDownloadsEnabled: true,
-      conversationClearEnabled: true,
-      collectUserInfoEnabled: true,
-      showLiveChatIcon: true,
-      emailEnabled: true,
-      emailAddress: "engineering@futr.ai",
-      emailFrequency: "WEEKLY",
-      initMessage: false
+      conversationDownloadsEnabled: data?.data.conversationDownloadsEnabled,
+      conversationClearEnabled: data?.data.conversationClearEnabled,
+      collectUserInfoEnabled: data?.data.collectUserInfoEnabled,
+      showLiveChatIcon: data?.data.showLiveChatIcon,
+      emailEnabled: data?.data.emailEnabled,
+      emailAddress: data?.data.conversationTranscripts.emailAddress,
+      emailFrequency: data?.data.conversationTranscripts.emailFrequency,
+      initMessage: data?.data.initMessage
     }
-  }, [])
+  }, [data?.data])
 
   const validationSchema = Yup.object().shape({
     emailAddress: Yup.string().required('Email is required').email('Please enter a valid email address')
   })
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+      console.log(JSON.stringify(values, null, 2));
     },
   });
 
@@ -63,23 +68,30 @@ const GeneralForm = () => {
     },
     {
       name: "collectUserInfoEnabled",
-      value: formik.values.collectUserInfoEnabled,
+      value: formik.values.showLiveChatIcon,
       label: "Show live chat icon for instant connection",
       subLabel: "Web Chat Only"
     },
     {
       name: "showLiveChatIcon",
-      value: formik.values.showLiveChatIcon,
+      value: formik.values.collectUserInfoEnabled,
       label: "Request user details prior to connecting",
       subLabel: "Name, email or contact number, and reason"
     },
     {
-      name: "emailEnabled",
-      value: formik.values.emailEnabled,
+      name: "initMessage",
+      value: formik.values.initMessage,
       label: "Receive transcripts by email",
       subLabel: "CSV file containing all conversations held in the selected period"
     }
   ]
+
+  if (isLoading) {
+    return <h2>Loading....</h2>
+  }
+  if (isError) {
+    return <h2>Error....</h2>
+  }
 
   return (
     <form onSubmit={formik.handleSubmit} onReset={formik.handleReset} style={{ width: '100%' }}>
@@ -107,7 +119,7 @@ const GeneralForm = () => {
             sx={{ borderRadius: '10px', fieldset: { borderColor: formik.errors.emailAddress ? "#fa912e" : '' } }}
             name={"emailAddress"}
             value={formik.values.emailAddress} onChange={formik.handleChange}
-            size={"small"} placeholder="Please enter a email address" disabled={!formik.values.emailEnabled}/>
+            size={"small"} placeholder="Please enter a email address" disabled={!formik.values.initMessage}/>
           <FormHelperText sx={{ color: '#fa912e' }}>{formik.errors.emailAddress}</FormHelperText>
         </FormControl>
         <RadioGroup

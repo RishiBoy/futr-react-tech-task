@@ -53,19 +53,22 @@ const CustomTabBox = () => {
       }}
     >
       <Paper variant="outlined" sx={{ padding: '20px' }}>
-        <Tabs
-          sx={{
-            width: '100%',
-          }}
-          value={value}
-          onChange={handleChange}
-          aria-label="icon position tabs"
-        >
-          <Tab icon={<SettingsIcon/>} iconPosition="start" label="General"/>
-          <Tab icon={<AccessTimeIcon/>} iconPosition="start" label="Support Times"/>
-          <Tab icon={<HeadsetOffIcon/>} iconPosition="start" label="Take Offline"/>
-          <Tab icon={<BlockIcon/>} iconPosition="start" label="Block Users"/>
-        </Tabs>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs
+            sx={{
+              width: '100%',
+              height: '60px'
+            }}
+            value={value}
+            onChange={handleChange}
+            aria-label="icon position tabs"
+          >
+            <Tab icon={<SettingsIcon/>} iconPosition="start" label="General"/>
+            <Tab icon={<AccessTimeIcon/>} iconPosition="start" label="Support Times"/>
+            <Tab icon={<HeadsetOffIcon/>} iconPosition="start" label="Take Offline"/>
+            <Tab icon={<BlockIcon/>} iconPosition="start" label="Block Users"/>
+          </Tabs>
+        </Box>
         <TabPanel value={value} index={0}>
           <GeneralForm/>
         </TabPanel>

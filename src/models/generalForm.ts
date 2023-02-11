@@ -11,3 +11,15 @@ export type FormType = {
   initMessage: false
 }
 
+export type FormResponseType = {
+  conversationDownloadsEnabled: boolean,
+  conversationClearEnabled: boolean,
+  collectUserInfoEnabled: boolean,
+  showLiveChatIcon: boolean,
+  conversationTranscripts: {
+    emailEnabled: boolean,
+    emailAddress: string,
+    emailFrequency: EmailFrequency
+  }
+  initMessage: false
+}
