@@ -1,13 +1,12 @@
-import { Box, Paper, Tab, Tabs, Typography } from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import HeadsetOffIcon from "@mui/icons-material/HeadsetOff";
-import BlockIcon from "@mui/icons-material/Block";
-import GeneralForm from "./generalForm";
-import { ReactNode, SyntheticEvent, useState } from "react";
+import React, { ReactNode, SyntheticEvent, useState } from 'react';
+import { Box, Paper, Tab, Tabs, Typography } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import HeadsetOffIcon from '@mui/icons-material/HeadsetOff';
+import BlockIcon from '@mui/icons-material/Block';
+import GeneralForm from './generalForm';
 
 const CustomTabBox = () => {
-
   const [value, setValue] = useState(0);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
@@ -52,29 +51,29 @@ const CustomTabBox = () => {
         backgroundColor: 'white',
       }}
     >
-      <Paper variant="outlined" sx={{ padding: '20px' }}>
+      <Paper variant="outlined" sx={{ padding: '10px', borderRadius: '10px' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
             sx={{
               width: '100%',
-              height: '60px'
+              height: '60px',
             }}
             value={value}
             onChange={handleChange}
             aria-label="icon position tabs"
           >
-            <Tab icon={<SettingsIcon/>} iconPosition="start" label="General"/>
-            <Tab icon={<AccessTimeIcon/>} iconPosition="start" label="Support Times"/>
-            <Tab icon={<HeadsetOffIcon/>} iconPosition="start" label="Take Offline"/>
-            <Tab icon={<BlockIcon/>} iconPosition="start" label="Block Users"/>
+            <Tab icon={<SettingsIcon />} iconPosition="start" label="General" />
+            <Tab icon={<AccessTimeIcon />} iconPosition="start" label="Support Times" />
+            <Tab icon={<HeadsetOffIcon />} iconPosition="start" label="Take Offline" />
+            <Tab icon={<BlockIcon />} iconPosition="start" label="Block Users" />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <GeneralForm/>
+          <GeneralForm />
         </TabPanel>
       </Paper>
     </Box>
-  )
-}
+  );
+};
 
-export default CustomTabBox
+export default CustomTabBox;
