@@ -1,10 +1,13 @@
 import React, { ReactNode, SyntheticEvent, useState } from 'react';
-import { Box, Paper, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Paper, Tab, Tabs } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import HeadsetOffIcon from '@mui/icons-material/HeadsetOff';
 import BlockIcon from '@mui/icons-material/Block';
-import GeneralForm from './generalForm';
+import GeneralForm from '../generalForm/generalForm';
+import SupportForm from '../supportForm/supportForm';
+import TakeOfflineForm from '../takeOfflineForm/takeOfflineForm';
+import BlockUserForm from '../blockUserForm/blockUserForm';
 
 const CustomTabBox = () => {
   const [value, setValue] = useState(0);
@@ -30,11 +33,7 @@ const CustomTabBox = () => {
         aria-labelledby={`simple-tab-${index}`}
         {...other}
       >
-        {value === index && (
-          <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
+        {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
       </div>
     );
   }
@@ -48,7 +47,7 @@ const CustomTabBox = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#eff3f7',
       }}
     >
       <Paper variant="outlined" sx={{ padding: '10px', borderRadius: '10px' }}>
@@ -70,6 +69,15 @@ const CustomTabBox = () => {
         </Box>
         <TabPanel value={value} index={0}>
           <GeneralForm />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <SupportForm />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <TakeOfflineForm />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <BlockUserForm />
         </TabPanel>
       </Paper>
     </Box>

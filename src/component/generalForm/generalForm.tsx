@@ -11,10 +11,11 @@ import {
   Switch,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import React, { useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import * as Yup from 'yup';
-import { FormType } from '../models/generalForm';
-import { useGeneralForm } from '../hooks/useGeneralForm';
+import { FormType } from '../../models/generalForm';
+import { useGeneralForm } from '../../hooks/useGeneralForm';
+import './generalForm.css';
 
 export type SwitchArrayType = {
   name: string;
@@ -28,14 +29,14 @@ const GeneralForm = () => {
 
   const initialValues = useMemo<FormType>(() => {
     return {
-      conversationDownloadsEnabled: data?.conversationDownloadsEnabled,
-      conversationClearEnabled: data?.conversationClearEnabled,
-      collectUserInfoEnabled: data?.collectUserInfoEnabled,
-      showLiveChatIcon: data?.showLiveChatIcon,
-      emailEnabled: data?.conversationTranscripts.emailEnabled,
-      emailAddress: data?.conversationTranscripts.emailAddress,
-      emailFrequency: data?.conversationTranscripts.emailFrequency,
-      initMessage: data?.initMessage,
+      conversationDownloadsEnabled: data?.conversationDownloadsEnabled ?? false,
+      conversationClearEnabled: data?.conversationClearEnabled ?? false,
+      collectUserInfoEnabled: data?.collectUserInfoEnabled ?? false,
+      showLiveChatIcon: data?.showLiveChatIcon ?? false,
+      emailEnabled: data?.conversationTranscripts.emailEnabled ?? false,
+      emailAddress: data?.conversationTranscripts.emailAddress ?? '',
+      emailFrequency: data?.conversationTranscripts.emailFrequency ?? 'DAILY',
+      initMessage: data?.initMessage ?? false,
     };
   }, [data]);
 
@@ -50,7 +51,7 @@ const GeneralForm = () => {
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+      console.log('GeneralFormData', JSON.stringify(values, null, 2));
     },
   });
 
@@ -95,15 +96,14 @@ const GeneralForm = () => {
   }
 
   return (
-    <form onSubmit={formik.handleSubmit} onReset={formik.handleReset} style={{ width: '100%' }}>
+    <form onSubmit={formik.handleSubmit} onReset={formik.handleReset} className={'w-100'}>
       <FormGroup>
         {switchArray.map((item) => (
-          <>
+          <Fragment key={item.name}>
             <FormControlLabel
-              key={item.name}
               control={
                 <Switch
-                  sx={{ marginRight: '10px' }}
+                  className={'switch'}
                   checked={item.value}
                   name={item.name}
                   value={item.value}
@@ -113,15 +113,13 @@ const GeneralForm = () => {
               label={item.label}
               labelPlacement="end"
             />
-            <FormHelperText sx={{ marginLeft: '58px', marginTop: '-10px' }}>
-              {item.subLabel}
-            </FormHelperText>
-          </>
+            <FormHelperText className={'switchHelperText'}>{item.subLabel}</FormHelperText>
+          </Fragment>
         ))}
-        <FormHelperText sx={{ marginTop: '20px', marginBottom: '15px', fontSize: '14px' }}>
+        <FormHelperText className={'emailHelperText'}>
           Please provide an Email Address
         </FormHelperText>
-        <FormControl sx={{ width: '50%' }}>
+        <FormControl className={'w-50'}>
           <OutlinedInput
             sx={{
               borderRadius: '10px',
@@ -143,7 +141,7 @@ const GeneralForm = () => {
           sx={{ alignItems: 'center' }}
           onChange={formik.handleChange}
         >
-          <FormHelperText sx={{ paddingRight: '75px', fontSize: '14px' }}>Frequency</FormHelperText>
+          <FormHelperText className={'frequencyText'}>Frequency</FormHelperText>
           <FormControlLabel
             control={
               <Radio
@@ -165,14 +163,7 @@ const GeneralForm = () => {
             label="Weekly"
           />
         </RadioGroup>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            marginTop: '20px',
-          }}
-        >
+        <Box className={'buttonBox'}>
           <Button variant="outlined" type="reset">
             Cancel
           </Button>

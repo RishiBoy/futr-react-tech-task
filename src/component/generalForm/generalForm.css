@@ -1,0 +1,27 @@
+
+.switch {
+    margin-right: 10px;
+}
+
+.switchHelperText {
+    margin-left: 58px;
+    margin-top: -10px
+}
+
+.emailHelperText {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 14px
+}
+
+.buttonBox {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px
+}
+
+.frequencyText {
+    padding-right: 75px;
+    font-size: 14px
+}
