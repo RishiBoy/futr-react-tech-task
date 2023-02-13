@@ -113,7 +113,9 @@ const GeneralForm = () => {
               label={item.label}
               labelPlacement="end"
             />
-            <FormHelperText className={'switchHelperText'}>{item.subLabel}</FormHelperText>
+            <FormHelperText sx={{ marginLeft: '58px', marginTop: '-10px' }}>
+              {item.subLabel}
+            </FormHelperText>
           </Fragment>
         ))}
         <FormHelperText className={'emailHelperText'}>
